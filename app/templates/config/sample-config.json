@@ -1,0 +1,27 @@
+{
+  "appServiceName": "<%= name %>-service",
+  "maxSockets": 500,
+  "cluster": false,
+  "processes": 0,
+  "environment": "development",
+  "jwtPublicCert": "./config/service.pub",
+  "logPath": "",
+  "logRequestHeader": true,
+  "logOutboundRequest": true,
+  "logglyConfig": {
+    "token": "",
+    "subdomain": "<%= name %>"
+  },
+  "hydra": {
+    "serviceName": "<%= name %>-service",
+    "serviceIP": "",
+    "servicePort": <%= port %>,
+    "serviceType": "<%= name %>",
+    "serviceDescription": "<%= Name %> Service",
+    "redis": {
+      "url": "127.0.0.1",
+      "port": 6379,
+      "db": 15
+    }
+  }
+}

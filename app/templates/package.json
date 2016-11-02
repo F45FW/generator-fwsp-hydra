@@ -1,0 +1,27 @@
+{
+  "name": "<%= name %>-service",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node <%= name %>-service.js",
+    "debug": "node-debug <%= name %>-service.js",
+    "test": "mocha specs --reporter spec"
+  },
+  "engines": {
+    "node": ">=6.2.1"
+  },
+  "dependencies": {
+    "@flywheelsports/fwsp-hydra-express": "0.10.5",
+    "fwsp-config": "1.0.3",
+    "fwsp-jwt-auth": "0.0.6",
+    "fwsp-server-response": "2.2.3"
+  },
+  "devDependencies": {
+    "chai": "3.5.0",
+    "eslint": "3.7.1",
+    "jscs": "3.0.7",
+    "jscs-jsdoc": "2.0.0",
+    "mocha": "3.1.1",
+    "superagent": "2.3.0"
+  }
+}
