@@ -1,5 +1,6 @@
 # <%= name %>-service
-Test program to authenticate with the flywheel auth service in prep for issuing other calls.
+
+<%= purpose %>
 
 ## Pre-installation
 
@@ -18,6 +19,5 @@ $ npm install
 ## Trial
 
 ```shell
-$ cp config/sample-config.json config/config.json
 $ npm start
 ```

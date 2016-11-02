@@ -4,7 +4,7 @@
   "cluster": false,
   "processes": 0,
   "environment": "development",
-  "jwtPublicCert": "./config/service.pub",
+  <% if (auth) { %>"jwtPublicCert": "./config/service.pub",<% } %>
   "logPath": "",
   "logRequestHeader": true,
   "logOutboundRequest": true,

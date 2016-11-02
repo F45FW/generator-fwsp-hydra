@@ -6,8 +6,11 @@
     "app"
   ],
   "author": "Eric Adum <eric@flywheelsports.com>",
-  "keywords": ["yeoman-generator"],
+  "keywords": [
+    "yeoman-generator"
+  ],
   "dependencies": {
+    "mkdirp": "^0.5.1",
     "yeoman-generator": "^0.24.1"
   }
 }
