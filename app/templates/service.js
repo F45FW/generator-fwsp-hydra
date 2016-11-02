@@ -5,10 +5,12 @@
 'use strict';
 
 const version = require('./package.json').version;
-<% if (express) {%>const hydraExpress = require('@flywheelsports/hydra-express');<% } %>
-<% if (auth) {%>const jwtAuth = require('@flywheelsports/jwt-auth');<% } %>
+<% if (express) {%>const hydraExpress = require('@flywheelsports/fwsp-hydra-express');
+<% } else {%>const hydra = require('@flywheelsports/fwsp-hydra');<% } %>
 
-let config = require('@flywheelsports/config');
+<% if (auth) {%>const jwtAuth = require('fwsp-jwt-auth');<% } %>
+
+let config = require('fwsp-config');
 
 /**
 * Load configuration file<% if (express) {%> and initialize hydraExpress app<% } %>.
@@ -37,6 +39,24 @@ config.init('./config/config.json')
           .catch((err) => {
             console.log('err', err);
           });
+      <% } else { %>
+      config.hydra.serviceVersion = version;
+      /**
+      * Initialize hydra
+      */
+      hydra.init(config.hydra)
+        .then(() => hydra.registerService())
+        .then(serviceInfo => {
+          let logEntry = `Starting ${serviceInfo.serviceName}`;
+          hydra.sendToHealthLog('info', logEntry);
+          console.log(logEntry);
+          hydra.on('log', (entry) => {
+            console.log('>>>> ', entry);
+          });
+        })
+        .catch(err => {
+          console.log('Error initializing hydra', err);
+        });
       <% } %>
       <% if (auth) {%>});<% } %>
   });

@@ -4,22 +4,22 @@
  */
 'use strict';
 
-const path = require('path');
-const hydraExpress = require('@flywheelsports/hydra-express');
+const hydraExpress = require('@flywheelsports/fwsp-hydra-express');
 const hydra = hydraExpress.getHydra();
 const express = hydraExpress.getExpress();
-const jwtAuth = require('@flywheelsports/jwt-auth');
-const ServerResponse = require('@flywheelsports/server-response');
-const pRequest = require('@flywheelsports/prequest');
+const jwtAuth = require('fwsp-jwt-auth');
+const ServerResponse = require('fwsp-server-response');
 
-let config = require('@flywheelsports/config');
+let config = require('fwsp-config');
 let serverResponse = new ServerResponse();
 serverResponse.enableCORS(true);
 
 let api = express.Router();
 
 api.get('/', (req, res) => {
-  res.json({});
+  serverResponse.sendOk(res, {
+    result: {}
+  });
 });
 
 module.exports = api;

@@ -11,10 +11,12 @@
     "node": ">=6.2.1"
   },
   "dependencies": {
+    <% if (express) { %>
     "@flywheelsports/fwsp-hydra-express": "0.10.5",
-    "fwsp-config": "1.0.3",
-    "fwsp-jwt-auth": "0.0.6",
-    "fwsp-server-response": "2.2.3"
+    "fwsp-server-response": "2.2.3",
+    <% } else { %>"@flywheelsports/fwsp-hydra": "0.10.5",<% } %>
+    <% if (auth) { %>"fwsp-jwt-auth": "0.0.6",<% } %>
+    "fwsp-config": "1.0.3"
   },
   "devDependencies": {
     "chai": "3.5.0",
