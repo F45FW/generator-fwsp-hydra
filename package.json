@@ -7,8 +7,11 @@
   ],
   "author": "Eric Adum <eric@flywheelsports.com>",
   "license": "MIT",
+  "repository": "flywheelsports/generator-fwsp-hydra",
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator",
+    "hydra",
+    "fwsp-hydra"
   ],
   "dependencies": {
     "mkdirp": "^0.5.1",
