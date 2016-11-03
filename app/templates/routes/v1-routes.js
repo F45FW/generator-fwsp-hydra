@@ -10,7 +10,6 @@ const express = hydraExpress.getExpress();
 const jwtAuth = require('fwsp-jwt-auth');
 const ServerResponse = require('fwsp-server-response');
 
-let config = require('fwsp-config');
 let serverResponse = new ServerResponse();
 serverResponse.enableCORS(true);
 

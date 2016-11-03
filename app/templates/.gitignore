@@ -2,9 +2,6 @@
 *.log
 *.pem
 *.rsa
-scratch.*
 node_modules
 config/config.json
-*/static
-*/public
-
+<% if (express) {%>*/public<% } %>

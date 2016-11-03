@@ -11,11 +11,14 @@
     "node": ">=6.2.1"
   },
   "dependencies": {
-    <% if (express) { %>
+    <%_ if (express) { _%>
     "@flywheelsports/fwsp-hydra-express": "0.10.5",
     "fwsp-server-response": "2.2.3",
-    <% } else { %>"@flywheelsports/fwsp-hydra": "0.10.5",<% } %>
-    <% if (auth) { %>"fwsp-jwt-auth": "0.0.6",<% } %>
+    <%_ } else { _%>
+    "@flywheelsports/fwsp-hydra": "0.10.5",
+    <%_ } _%><%_ if (auth) { _%>
+    "fwsp-jwt-auth": "0.0.6",
+    <%_ } _%>
     "fwsp-config": "1.0.3"
   },
   "devDependencies": {

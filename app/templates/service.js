@@ -1,34 +1,34 @@
 /**
 * @name <%= Name %>
-* @description This is the service entry point
+* @summary <%= Name %> Hydra<%_if (express) {%> Express<% } %> service entry point
+* @description <%= purpose %>
 */
 'use strict';
 
 const version = require('./package.json').version;
-<% if (express) {%>const hydraExpress = require('@flywheelsports/fwsp-hydra-express');
-<% } else {%>const hydra = require('@flywheelsports/fwsp-hydra');<% } %>
-
-<% if (auth) {%>const jwtAuth = require('fwsp-jwt-auth');<% } %>
+<%_ if (express) { _%>const hydraExpress = require('@flywheelsports/fwsp-hydra-express');
+<%_ } else { _%>const hydra = require('@flywheelsports/fwsp-hydra');<%_ } _%>
+<%_ if (auth) { _%>const jwtAuth = require('fwsp-jwt-auth');<%_ } _%>
 
 let config = require('fwsp-config');
 
 /**
-* Load configuration file<% if (express) {%> and initialize hydraExpress app<% } %>.
+* Load configuration file<%_ if (express) {_%> and initialize hydraExpress app<%_ } _%>.
 */
 config.init('./config/config.json')
   .then(() => {
     config.version = version;
-    <% if (auth) {%>
+    <%_ if (auth) {_%>
     jwtAuth.loadCerts(null, config.jwtPublicCert)
       .then((status) => {
-    <% } %>
-        <% if (express) {%>
+    <%_ } _%>
+        <%_ if (express) {_%>
         hydraExpress.init(config.getObject(), version, () => {
           const app = hydraExpress.getExpressApp();
-          <% if (views) {%>
+          <%_ if (views) {_%>
           app.set('views', './views');
           app.set('view engine', 'pug');
-          <% } %>
+          <%_ } _%>
           hydraExpress.registerRoutes({
             '/v1/<%= name %>': require('./routes/<%= name %>-v1-routes')
           });
@@ -39,7 +39,7 @@ config.init('./config/config.json')
           .catch((err) => {
             console.log('err', err);
           });
-      <% } else { %>
+      <%_ } else { _%>
       config.hydra.serviceVersion = version;
       /**
       * Initialize hydra
@@ -57,6 +57,6 @@ config.init('./config/config.json')
         .catch(err => {
           console.log('Error initializing hydra', err);
         });
-      <% } %>
-      <% if (auth) {%>});<% } %>
+      <%_ } _%>
+      <%_ if (auth) {_%>});<%_ } _%>
   });
