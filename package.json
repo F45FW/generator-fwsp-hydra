@@ -6,6 +6,7 @@
     "app"
   ],
   "author": "Eric Adum <eric@flywheelsports.com>",
+  "license": "MIT",
   "keywords": [
     "yeoman-generator"
   ],
