@@ -6,8 +6,8 @@
 'use strict';
 
 const version = require('./package.json').version;
-<%_ if (express) { _%>const hydraExpress = require('@flywheelsports/fwsp-hydra-express');
-<%_ } else { _%>const hydra = require('@flywheelsports/fwsp-hydra');<%_ } _%>
+<%_ if (express) { _%>const hydraExpress = require('fwsp-hydra-express');
+<%_ } else { _%>const hydra = require('fwsp-hydra');<%_ } _%>
 <%_ if (auth) { _%>const jwtAuth = require('fwsp-jwt-auth');<%_ } _%>
 
 let config = require('fwsp-config');

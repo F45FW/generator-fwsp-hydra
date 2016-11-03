@@ -12,7 +12,9 @@ $ yo fwsp-hydra
 ? Does this service need auth? Yes
 ? Is this a hydra-express service? Yes
 ? Set up a view engine? No
+? Enable CORS on serverResponses? No
 ? Run npm install? No
+   create example-service/.editorconfig
    create example-service/.eslintrc
    create example-service/.gitattributes
    create example-service/.nvmrc
@@ -29,7 +31,7 @@ $ yo fwsp-hydra
    create example-service/routes/example-v1-routes.js
 
 Done!
-'cd example-service' and run 'npm start'
+'cd example-service' then 'npm install' and 'npm start'
 
 $
 ```

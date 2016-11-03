@@ -12,10 +12,10 @@
   },
   "dependencies": {
     <%_ if (express) { _%>
-    "@flywheelsports/fwsp-hydra-express": "0.10.5",
+    "fwsp-hydra-express": "0.10.6",
     "fwsp-server-response": "2.2.3",
     <%_ } else { _%>
-    "@flywheelsports/fwsp-hydra": "0.10.5",
+    "fwsp-hydra": "0.10.5",
     <%_ } _%><%_ if (auth) { _%>
     "fwsp-jwt-auth": "0.0.6",
     <%_ } _%>

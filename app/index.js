@@ -108,7 +108,8 @@ module.exports = generators.Base.extend({
       auth: this.auth,
       express: this.express,
       views: this.views,
-      cors: this.cors
+      cors: this.cors,
+      npm: this.npm
     };
     var copy = (src, dest) => {
       if (!dest) {

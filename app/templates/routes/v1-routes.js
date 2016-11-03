@@ -4,7 +4,7 @@
  */
 'use strict';
 
-const hydraExpress = require('@flywheelsports/fwsp-hydra-express');
+const hydraExpress = require('fwsp-hydra-express');
 const hydra = hydraExpress.getHydra();
 const express = hydraExpress.getExpress();
 <%_ if (auth) { _%>const jwtAuth = require('fwsp-jwt-auth');<%_ } _%>
