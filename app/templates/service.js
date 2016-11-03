@@ -24,8 +24,8 @@ config.init('./config/config.json')
     <%_ } _%>
         <%_ if (express) {_%>
         hydraExpress.init(config.getObject(), version, () => {
-          const app = hydraExpress.getExpressApp();
           <%_ if (views) {_%>
+          const app = hydraExpress.getExpressApp();
           app.set('views', './views');
           app.set('view engine', 'pug');
           <%_ } _%>

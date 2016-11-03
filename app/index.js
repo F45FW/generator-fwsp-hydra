@@ -2,7 +2,7 @@ const generators = require('yeoman-generator'),
       mkdirp = require('mkdirp');
 
 const SCAFFOLD_FOLDERS = ['config', 'specs', 'specs/helpers'],
-      COPY_FILES = ['.eslintrc', '.gitattributes', '.nvmrc', '.jscsrc',
+      COPY_FILES = ['.editorconfig', '.eslintrc', '.gitattributes', '.nvmrc', '.jscsrc',
                     'specs/test.js', 'specs/helpers/chai.js'],
       USER_PROMPTS = [
         {
@@ -132,7 +132,7 @@ module.exports = generators.Base.extend({
   },
 
   _done: function() {
-    console.log(`\nDone!\n'cd ${this.serviceFolder}' and run 'npm start'\n`)
+    console.log(`\nDone!\n'cd ${this.serviceFolder}' then ${this.npm ? '' : '\'npm install\' and '}'npm start'\n`)
   },
 
   done: function() {
