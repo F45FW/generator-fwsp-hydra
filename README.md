@@ -4,6 +4,7 @@ Yeoman generator for Hydra services
 
 ## Synopsis
 ```
+$ npm install -g yo generator-fwsp-hydra
 $ yo fwsp-hydra
 ? Name of the service (`-service` will be appended automatically) example
 ? Host the service runs on?
