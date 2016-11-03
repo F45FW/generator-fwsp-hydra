@@ -1,31 +1,37 @@
-# generator-hydra
+# generator-fwsp-hydra
 
 Yeoman generator for Hydra services
 
 ## Synopsis
 ```
-$ yo hydra
-? Name of the service (`-service` will be appended automatically) new
-? Port the service runs on? 4444
-? What does this service do? Description for new-service
+$ yo fwsp-hydra
+? Name of the service (`-service` will be appended automatically) example
+? Host the service runs on?
+? Port the service runs on? 0
+? What does this service do? This is an example service.
 ? Does this service need auth? Yes
 ? Is this a hydra-express service? Yes
-? Set up a view engine? Yes
-   create new-service/.eslintrc
-   create new-service/.gitattributes
-   create new-service/.gitignore
-   create new-service/.nvmrc
-   create new-service/.jscsrc
-   create new-service/deploy-check.sh
-   create new-service/specs/test.js
-   create new-service/specs/helpers/chai.js
-   create new-service/config/service.pub
-   create new-service/package.json
-   create new-service/README.md
-   create new-service/new-service.js
-   create new-service/config/sample-config.json
-   create new-service/config/config.json
-   create new-service/routes/new-v1-routes.js
+? Set up a view engine? No
+? Run npm install? No
+   create example-service/.eslintrc
+   create example-service/.gitattributes
+   create example-service/.nvmrc
+   create example-service/.jscsrc
+   create example-service/specs/test.js
+   create example-service/specs/helpers/chai.js
+   create example-service/config/service.pub
+   create example-service/.gitignore
+   create example-service/package.json
+   create example-service/README.md
+   create example-service/example-service.js
+   create example-service/config/sample-config.json
+   create example-service/config/config.json
+   create example-service/routes/example-v1-routes.js
+
+Done!
+'cd example-service' and run 'npm start'
+
+$
 ```
 
 ## Notes
