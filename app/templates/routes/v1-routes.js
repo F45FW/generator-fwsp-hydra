@@ -7,11 +7,11 @@
 const hydraExpress = require('@flywheelsports/fwsp-hydra-express');
 const hydra = hydraExpress.getHydra();
 const express = hydraExpress.getExpress();
-const jwtAuth = require('fwsp-jwt-auth');
+<%_ if (auth) { _%>const jwtAuth = require('fwsp-jwt-auth');<%_ } _%>
 const ServerResponse = require('fwsp-server-response');
 
 let serverResponse = new ServerResponse();
-serverResponse.enableCORS(true);
+<%_ if (cors) { _%>serverResponse.enableCORS(true);<%_ } _%>
 
 let api = express.Router();
 

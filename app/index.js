@@ -47,6 +47,13 @@ const SCAFFOLD_FOLDERS = ['config', 'specs', 'specs/helpers'],
           default : false
         },
         {
+          when    : response => response.express,
+          type    : 'confirm',
+          name    : 'cors',
+          message : 'Enable CORS on serverResponses?',
+          default : false
+        },
+        {
           type    : 'confirm',
           name    : 'npm',
           message : 'Run npm install?',
@@ -65,6 +72,7 @@ module.exports = generators.Base.extend({
       this.auth = answers.auth;
       this.express = answers.express;
       this.views = this.express ? answers.views : false;
+      this.cors = this.express ? answers.cors : false;
       this.npm = answers.npm;
      }.bind(this));
   },
@@ -99,7 +107,8 @@ module.exports = generators.Base.extend({
       purpose: this.purpose,
       auth: this.auth,
       express: this.express,
-      views: this.views
+      views: this.views,
+      cors: this.cors
     };
     var copy = (src, dest) => {
       if (!dest) {

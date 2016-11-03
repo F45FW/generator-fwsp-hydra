@@ -13,7 +13,7 @@ const version = require('./package.json').version;
 let config = require('fwsp-config');
 
 /**
-* Load configuration file<%_ if (express) {_%> and initialize hydraExpress app<%_ } _%>.
+* Load configuration file<% if (express) {%> and initialize hydraExpress app<% } %>.
 */
 config.init('./config/config.json')
   .then(() => {
