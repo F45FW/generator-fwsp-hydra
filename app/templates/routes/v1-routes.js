@@ -15,7 +15,8 @@ let serverResponse = new ServerResponse();
 
 let api = express.Router();
 
-api.get('/', (req, res) => {
+api.get('/',<% if (auth) {%> hydraExpress.validateJwtToken(),<% } %>
+(req, res) => {
   serverResponse.sendOk(res, {
     result: {}
   });
