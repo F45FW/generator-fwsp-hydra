@@ -1,9 +1,9 @@
 const generators = require('yeoman-generator'),
       mkdirp = require('mkdirp');
 
-const SCAFFOLD_FOLDERS = ['config', 'specs', 'specs/helpers'],
+const SCAFFOLD_FOLDERS = ['config', 'specs', 'specs/helpers', 'scripts'],
       COPY_FILES = ['.editorconfig', '.eslintrc', '.gitattributes', '.nvmrc', '.jscsrc',
-                    'specs/test.js', 'specs/helpers/chai.js'],
+                    'specs/test.js', 'specs/helpers/chai.js', 'scripts/docker.js'],
       USER_PROMPTS = [
         {
           type    : 'input',

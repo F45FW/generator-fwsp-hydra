@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node <%= name %>-service.js",
     "debug": "node-debug <%= name %>-service.js",
-    "test": "mocha specs --reporter spec"
+    "test": "mocha specs --reporter spec",
+    "docker": "node scripts/docker.js"
   },
   "engines": {
     "node": ">=6.2.1"
