@@ -1,17 +1,16 @@
 {
   "appServiceName": "<%= name %>-service",
-  "maxSockets": 500,
-  "cluster": false,
-  "processes": 0,
   "environment": "development",
   <%_ if (auth) { _%>"jwtPublicCert": "./config/service.pub",<%_ } _%>
-  "logPath": "",
-  "logRequestHeader": true,
-  "logOutboundRequest": true,
-  "logglyConfig": {
-    "token": "",
-    "subdomain": "<%= name %>"
+  <%_ if (logging) { _%>
+  "logger": {
+    "logRequests": true,
+    "elasticsearch": {
+      "host": "localhost",
+      "port": 9200
+    }
   },
+  <%_ } _%>
   "hydra": {
     "serviceName": "<%= name %>-service",
     "serviceIP": "<%= ip %>",

@@ -2,8 +2,8 @@ const generators = require('yeoman-generator'),
       mkdirp = require('mkdirp');
 
 const SCAFFOLD_FOLDERS = ['config', 'specs', 'specs/helpers', 'scripts'],
-      COPY_FILES = ['.editorconfig', '.eslintrc', '.gitattributes', '.nvmrc', '.jscsrc',
-                    'specs/test.js', 'specs/helpers/chai.js', 'scripts/docker.js'],
+      COPY_FILES = ['specs/test.js', 'specs/helpers/chai.js', 'scripts/docker.js'],
+      DOT_FILES = ['.editorconfig', '.eslintrc', '.gitattributes', '.nvmrc'],
       USER_PROMPTS = [
         {
           type    : 'input',
@@ -103,6 +103,9 @@ module.exports = generators.Base.extend({
     COPY_FILES.forEach((file) => {
         this.copy(file, this.serviceFolder + '/' + file);
     });
+    DOT_FILES.forEach((file) => {
+        this.copy(file.replace('.', 'dot_'), this.serviceFolder + '/' + file);
+    });
   },
 
   copyTemplates: function () {
@@ -123,13 +126,17 @@ module.exports = generators.Base.extend({
       if (!dest) {
         dest = src;
       }
-      this.fs.copyTpl(
-        this.templatePath(src),
-        this.destinationPath(this.serviceFolder + '/' + dest),
-        params
-      );
+      try {
+        this.fs.copyTpl(
+          this.templatePath(src),
+          this.destinationPath(this.serviceFolder + '/' + dest),
+          params
+        );
+      } catch (err) {
+        console.log(`Error copying template: ${src}`, err);
+      }
     };
-    copy('.gitignore');
+    copy('dot_gitignore', '.gitignore');
     copy('package.json');
     copy('README.md');
     copy('service.js', this.appname + '-service.js');
