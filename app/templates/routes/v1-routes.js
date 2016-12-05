@@ -12,14 +12,18 @@ const ServerResponse = require('fwsp-server-response');
 
 let serverResponse = new ServerResponse();
 <%_ if (cors) { _%>serverResponse.enableCORS(true);<%_ } _%>
+express.response.sendError = function(err) {
+  serverResponse.sendServerError(this, {result: {error: err}});
+};
+express.response.sendOk = function(result) {
+  serverResponse.sendOk(this, {result});
+};
 
 let api = express.Router();
 
 api.get('/',<% if (auth) {%> hydraExpress.validateJwtToken(),<% } %>
 (req, res) => {
-  serverResponse.sendOk(res, {
-    result: {}
-  });
+  res.sendOk({greeting: 'Welcome to Hydra Express!'});
 });
 
 module.exports = api;

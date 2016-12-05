@@ -23,6 +23,14 @@ config.init('./config/config.json')
       .then((status) => {
     <%_ } _%>
         <%_ if (express) {_%>
+        <%_ if (logging) {_%>
+        // Initialize logging
+        if (config.logger) {
+          require('fwsp-logger').initHydraExpress(
+            hydraExpress, config.hydra.serviceName, config.logger
+          );
+        }
+        <%_ } _%>
         hydraExpress.init(config.getObject(), version, () => {
           <%_ if (views) {_%>
           const app = hydraExpress.getExpressApp();
@@ -33,12 +41,8 @@ config.init('./config/config.json')
             '/v1/<%= name %>': require('./routes/<%= name %>-v1-routes')
           });
         })
-          .then((serviceInfo) => {
-            console.log('serviceInfo', serviceInfo);
-          })
-          .catch((err) => {
-            console.log('err', err);
-          });
+          .then(serviceInfo => console.log('serviceInfo', serviceInfo))
+          .catch(err => console.log('err', err));
       <%_ } else { _%>
       config.hydra.serviceVersion = version;
       /**
@@ -47,11 +51,22 @@ config.init('./config/config.json')
       hydra.init(config.hydra)
         .then(() => hydra.registerService())
         .then(serviceInfo => {
+          <%_ if (logging) {_%>
+            if (config.logger) {
+              const Logger = require('fwsp-logger').Logger;
+              hydra.logger = new Logger(
+                  { name: serviceName },
+                  config.logger.elasticsearch
+              );
+            } else {
+              console.log('Warning: no logger entry in config');
+            }
+          <%_ } _%>
           let logEntry = `Starting ${serviceInfo.serviceName}`;
           hydra.sendToHealthLog('info', logEntry);
           console.log(logEntry);
           hydra.on('log', (entry) => {
-            console.log('>>>> ', entry);
+            this.logger.info(entry);
           });
         })
         .catch(err => {

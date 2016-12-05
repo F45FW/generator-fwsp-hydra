@@ -13,12 +13,14 @@
   },
   "dependencies": {
     <%_ if (express) { _%>
-    "fwsp-hydra-express": "0.10.6",
+    "fwsp-hydra-express": "0.11.4",
     "fwsp-server-response": "2.2.3",
     <%_ } else { _%>
-    "fwsp-hydra": "0.10.5",
+    "fwsp-hydra": "0.11.2",
     <%_ } _%><%_ if (auth) { _%>
     "fwsp-jwt-auth": "0.0.6",
+    <%_ } _%><%_ if (logging) { _%>
+    "fwsp-logger": "0.0.2",
     <%_ } _%>
     "fwsp-config": "1.0.3"
   },

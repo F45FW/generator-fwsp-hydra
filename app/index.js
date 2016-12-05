@@ -47,6 +47,12 @@ const SCAFFOLD_FOLDERS = ['config', 'specs', 'specs/helpers', 'scripts'],
           default : false
         },
         {
+          type    : 'confirm',
+          name    : 'logging',
+          message : 'Set up logging?',
+          default : false
+        },
+        {
           when    : response => response.express,
           type    : 'confirm',
           name    : 'cors',
@@ -72,6 +78,7 @@ module.exports = generators.Base.extend({
       this.auth = answers.auth;
       this.express = answers.express;
       this.views = this.express ? answers.views : false;
+      this.logging = answers.logging;
       this.cors = this.express ? answers.cors : false;
       this.npm = answers.npm;
      }.bind(this));
@@ -108,6 +115,7 @@ module.exports = generators.Base.extend({
       auth: this.auth,
       express: this.express,
       views: this.views,
+      logging: this.logging,
       cors: this.cors,
       npm: this.npm
     };
