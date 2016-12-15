@@ -12,19 +12,9 @@
     "node": ">=6.2.1"
   },
   "dependencies": {
-    <%_ if (express) { _%>
-    "fwsp-hydra-express": "0.11.5",
-    "fwsp-server-response": "2.2.3",
-    <%_ } else { _%>
-    "fwsp-hydra": "0.11.2",
-    <%_ } _%><%_ if (auth) { _%>
-    "fwsp-jwt-auth": "0.0.6",
-    <%_ } _%><%_ if (logging) { _%>
-    "fwsp-logger": "0.0.4",
-    <%_ if (!express) { _%>
-    "fwsp-jsutils": "1.0.8",
-    <%_ } _%><%_ } _%>
-    "fwsp-config": "1.0.4"
+    <%_ deps.forEach(module => { _%>
+    "<%= module %>": <%= versions[module] %>
+    <%_ }) _%>
   },
   "devDependencies": {
     "chai": "3.5.0",

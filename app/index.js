@@ -1,10 +1,21 @@
-const generators = require('yeoman-generator'),
-      mkdirp = require('mkdirp');
+const generators = require('yeoman-generator');
+const mkdirp = require('mkdirp');
+const Promise = require('bluebird');
+const spawn = require('child_process').spawn;
 
-const SCAFFOLD_FOLDERS = ['config', 'specs', 'specs/helpers', 'scripts'],
-      COPY_FILES = ['specs/test.js', 'specs/helpers/chai.js', 'scripts/docker.js'],
-      DOT_FILES = ['.editorconfig', '.eslintrc', '.gitattributes', '.nvmrc'],
-      USER_PROMPTS = [
+const HYDRA_NPM_MODULES = [
+  'fwsp-hydra-express',
+  'fwsp-server-response',
+  'fwsp-hydra',
+  'fwsp-jwt-auth',
+  'fwsp-logger',
+  'fwsp-jsutils',
+  'fwsp-config'
+];
+const SCAFFOLD_FOLDERS = ['config', 'specs', 'specs/helpers', 'scripts'];
+const COPY_FILES = ['specs/test.js', 'specs/helpers/chai.js', 'scripts/docker.js'];
+const DOT_FILES = ['.editorconfig', '.eslintrc', '.gitattributes', '.nvmrc'];
+const USER_PROMPTS = [
         {
           type    : 'input',
           name    : 'name',
@@ -67,7 +78,35 @@ const SCAFFOLD_FOLDERS = ['config', 'specs', 'specs/helpers', 'scripts'],
         },
       ];
 
+let checkLatestVersion = (module) => {
+  return new Promise((resolve, reject) => {
+    let npmShow = spawn('npm', ['show', module, 'version']);
+    npmShow.on('error', (err) => {
+      reject(err);
+    });
+    npmShow.stdout.on('data', (data) => {
+      resolve(data.toString().trim());
+    });
+    npmShow.stderr.on('data', (data) => {
+      reject(data);
+    });
+  });
+};
+
 module.exports = generators.Base.extend({
+
+  initializing: {
+    latestModuleVersion: function() {
+      return Promise.all(HYDRA_NPM_MODULES.map(module => checkLatestVersion(module)))
+        .then(results => {
+          this.moduleVersions = {};
+          HYDRA_NPM_MODULES.forEach((val, i) => {
+            this.moduleVersions[val] = results[i];
+          });
+          console.log(this.moduleVersions);
+        });
+    },
+  },
 
   prompting: function () {
     return this.prompt(USER_PROMPTS).then(function (answers) {
@@ -109,6 +148,23 @@ module.exports = generators.Base.extend({
   },
 
   copyTemplates: function () {
+
+    let deps = ['fwsp-config'];
+    if (this.express) {
+      deps.push('fwsp-hydra-express', 'fwsp-server-response');
+    } else {
+      deps.push('fwsp-hydra');
+    }
+    if (this.auth) {
+      deps.push('fwsp-jwt-auth');
+    }
+    if (this.logging) {
+      deps.push('fwsp-logger');
+      if (!express) {
+         deps.push('fwsp-jsutils');
+      }
+    }
+
     var params = {
       name: this.appname,
       Name: this.appname.charAt(0).toUpperCase() + this.appname.slice(1),
@@ -120,7 +176,9 @@ module.exports = generators.Base.extend({
       views: this.views,
       logging: this.logging,
       cors: this.cors,
-      npm: this.npm
+      npm: this.npm,
+      deps: deps,
+      versions: this.moduleVersions
     };
     var copy = (src, dest) => {
       if (!dest) {
