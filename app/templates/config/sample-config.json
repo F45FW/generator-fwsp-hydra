@@ -1,5 +1,4 @@
 {
-  "appServiceName": "<%= name %>-service",
   "environment": "development",
   <%_ if (auth) { _%>"jwtPublicCert": "./config/service.pub",<%_ } _%>
   <%_ if (logging) { _%>
