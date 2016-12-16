@@ -2,6 +2,8 @@ const generators = require('yeoman-generator');
 const mkdirp = require('mkdirp');
 const Promise = require('bluebird');
 const spawn = require('child_process').spawn;
+const version = require('./../package.json').version;
+const chalk = require('chalk');
 
 const HYDRA_NPM_MODULES = [
   'fwsp-hydra-express',
@@ -96,6 +98,17 @@ let checkLatestVersion = (module) => {
 module.exports = generators.Base.extend({
 
   initializing: {
+    displayVersion: function() {
+      return Promise.all(['yeoman-generator', 'yo'].map(module => checkLatestVersion(module)))
+        .then(versions => {
+          console.log(
+            chalk.yellow(`fwsp-hydra generator v${chalk.bold.underline(version)}`) + '   ' +
+            chalk.cyan(`yeoman-generator v${chalk.bold.underline(versions[0])}`) + '   ' +
+            chalk.green(`yo v${chalk.bold.underline(versions[1])}`)
+          );
+        })
+        .catch(err => console.log(err.toString()));
+    },
     latestModuleVersion: function() {
       return Promise.all(HYDRA_NPM_MODULES.map(module => checkLatestVersion(module)))
         .then(results => {

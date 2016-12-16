@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node <%= name %>-service.js",
-    "debug": "node-debug <%= name %>-service.js",
+    "debug": "node-debug <%= name %>-service.js --debug-brk",
     "test": "mocha specs --reporter spec",
     "docker": "node scripts/docker.js"
   },
