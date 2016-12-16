@@ -12,8 +12,8 @@
     "node": ">=6.2.1"
   },
   "dependencies": {
-    <%_ deps.forEach(module => { _%>
-    "<%= module %>": <%= versions[module] %>
+    <%_ deps.forEach((module, i) => { _%>
+    "<%= module %>": "<%= versions[module] %>"<%_ if (i<deps.length-1) {%>,<%_}%>
     <%_ }) _%>
   },
   "devDependencies": {

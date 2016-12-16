@@ -103,7 +103,6 @@ module.exports = generators.Base.extend({
           HYDRA_NPM_MODULES.forEach((val, i) => {
             this.moduleVersions[val] = results[i];
           });
-          console.log(this.moduleVersions);
         });
     },
   },
