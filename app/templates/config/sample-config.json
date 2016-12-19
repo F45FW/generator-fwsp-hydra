@@ -7,11 +7,6 @@
     "servicePort": <%= port %>,
     "serviceType": "<%= name %>",
     "serviceDescription": "<%= purpose %>",
-    "redis": {
-      "url": "127.0.0.1",
-      "port": 6379,
-      "db": 15
-    },
     <%_ if (logging) { _%>
     "plugins": {
       "logger": {
@@ -22,7 +17,12 @@
           "index": "gemini-local"
         }
       }
-    }
+    },
     <%_ } _%>
+    "redis": {
+      "url": "127.0.0.1",
+      "port": 6379,
+      "db": 15
+    }
   }
 }

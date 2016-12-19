@@ -7,7 +7,7 @@ const config = require('fwsp-config'),
         run: ['docker', ['run', '-it', tag], {stdio: 'inherit'}],
         up: ['docker', ['run', '-d', tag], {detached: true}]
       },
-      getDockerfile = (exposePort) => `
+      getDockerfile = (exposePort, logger=false) => `
       FROM node:6.3
       MAINTAINER Eric Adum eric@flywheelsports.com
       EXPOSE ${exposePort}
@@ -16,6 +16,7 @@ const config = require('fwsp-config'),
       WORKDIR /usr/src/app
       ADD . /usr/src/app
       RUN echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > .npmrc
+      ${logger ? 'RUN npm install pino-elasticsearch -g' : ''}
       RUN npm install
       RUN rm -f .npmrc
       CMD ["npm", "start"]
@@ -42,7 +43,10 @@ if (mode === 'build') {
     console.log('No Dockerfile found, loading config.json and generating one...');
     config.init('./config/config.json')
       .then(() => {
-        let Dockerfile = getDockerfile(config.hydra.servicePort);
+        let Dockerfile = getDockerfile(
+          config.hydra.servicePort,
+          config.hydra.plugins && config.hydra.plugins.logger ? true : false
+        ).split(/\n/).map(v => v.trim()).filter(v => v.length).join('\n');
         console.log(Dockerfile);
         fs.writeFile('Dockerfile', Dockerfile, err => {
           if (err) {
