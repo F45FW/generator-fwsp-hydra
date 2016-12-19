@@ -172,7 +172,7 @@ module.exports = generators.Base.extend({
     }
     if (this.logging) {
       deps.push('fwsp-logger');
-      if (!express) {
+      if (!this.express) {
          deps.push('fwsp-jsutils');
       }
     }
@@ -209,7 +209,8 @@ module.exports = generators.Base.extend({
     copy('dot_gitignore', '.gitignore');
     copy('package.json');
     copy('README.md');
-    copy('service.js', this.appname + '-service.js');
+    copy(this.express ? 'hydra-express-service.js' : 'hydra-service.js',
+         this.appname + '-service.js');
     copy('config/sample-config.json');
     copy('config/sample-config.json', 'config/config.json');
     if (this.express) {

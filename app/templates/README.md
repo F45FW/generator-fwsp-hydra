@@ -10,6 +10,7 @@ The project includes an .nvmrc which specifies NodeJS 6.2.1
 ## Installation
 
 ```javascript
+$ cd <%= name %>-service
 $ nvm use
 <%_ if (!npm) {_%>
 $ npm install

@@ -1,15 +1,6 @@
 {
   "environment": "development",
   <%_ if (auth) { _%>"jwtPublicCert": "./config/service.pub",<%_ } _%>
-  <%_ if (logging) { _%>
-  "logger": {
-    "logRequests": true,
-    "elasticsearch": {
-      "host": "localhost",
-      "port": 9200
-    }
-  },
-  <%_ } _%>
   "hydra": {
     "serviceName": "<%= name %>-service",
     "serviceIP": "<%= ip %>",
@@ -20,6 +11,18 @@
       "url": "127.0.0.1",
       "port": 6379,
       "db": 15
+    },
+    <%_ if (logging) { _%>
+    "plugins": {
+      "logger": {
+        "logRequests": true,
+        "elasticsearch": {
+          "host": "localhost",
+          "port": 9200,
+          "index": "gemini-local"
+        }
+      }
     }
+    <%_ } _%>
   }
 }
