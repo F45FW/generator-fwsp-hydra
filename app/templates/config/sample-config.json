@@ -14,7 +14,7 @@
         "elasticsearch": {
           "host": "localhost",
           "port": 9200,
-          "index": "gemini-local"
+          "index": "hydra"
         }
       }
     },
