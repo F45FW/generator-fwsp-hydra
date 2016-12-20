@@ -21,22 +21,23 @@ hydra.use(new HydraLogger());
 config.init('./config/config.json')
   .then(() => {
     config.version = version;
-    <%_ if (auth) {_%>
-    jwtAuth.loadCerts(null, config.jwtPublicCert)
-      .then((status) => {
-    <%_ } _%>
-      config.hydra.serviceVersion = version;
-      /**
-      * Initialize hydra
-      */
-      hydra.init(config.hydra)
-        .then(() => hydra.registerService())
-        .then(serviceInfo => {
-          let logEntry = `Starting ${config.hydra.serviceName} (v.${config.version})`;
-          hydra.sendToHealthLog('info', logEntry);
-        })
-        .catch(err => {
-          console.log('Error initializing hydra', err);
-        });
-    <%_ if (auth) {_%>});<%_ } _%>
+    config.hydra.serviceVersion = version;
+  <%_ if (auth) {_%>
+    return jwtAuth.loadCerts(null, config.jwtPublicCert);
+  })
+  .then((status) => {
+  <%_ } _%>
+    /**
+    * Initialize hydra
+    */
+    return hydra.init(config.hydra);
+  })
+  .then(() => hydra.registerService())
+  .then(serviceInfo => {
+    let logEntry = `Starting ${config.hydra.serviceName} (v.${config.version})`;
+    hydra.sendToHealthLog('info', logEntry);
+    console.log(logEntry);
+  })
+  .catch(err => {
+    console.log('Error initializing hydra', err);
   });

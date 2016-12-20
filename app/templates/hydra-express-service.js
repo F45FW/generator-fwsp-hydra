@@ -23,21 +23,21 @@ let config = require('fwsp-config');
 config.init('./config/config.json')
   .then(() => {
     config.version = version;
-    <%_ if (auth) {_%>
-    jwtAuth.loadCerts(null, config.jwtPublicCert)
-      .then((status) => {
-    <%_ } _%>
-        hydraExpress.init(config.getObject(), version, () => {
-          <%_ if (views) {_%>
-          const app = hydraExpress.getExpressApp();
-          app.set('views', './views');
-          app.set('view engine', 'pug');
-          <%_ } _%>
-          hydraExpress.registerRoutes({
-            '/v1/<%= name %>': require('./routes/<%= name %>-v1-routes')
-          });
-        })
-          .then(serviceInfo => console.log('serviceInfo', serviceInfo))
-          .catch(err => console.log('err', err));
-    <%_ if (auth) {_%>});<%_ } _%>
-  });
+  <%_ if (auth) {_%>
+    return jwtAuth.loadCerts(null, config.jwtPublicCert);
+  })
+  .then(status => {
+  <%_ } _%>
+    return hydraExpress.init(config.getObject(), version, () => {
+      <%_ if (views) {_%>
+      const app = hydraExpress.getExpressApp();
+      app.set('views', './views');
+      app.set('view engine', 'pug');
+      <%_ } _%>
+      hydraExpress.registerRoutes({
+        '/v1/<%= name %>': require('./routes/<%= name %>-v1-routes')
+      });
+    });
+  })
+  .then(serviceInfo => console.log('serviceInfo', serviceInfo))
+  .catch(err => console.log('err', err));
