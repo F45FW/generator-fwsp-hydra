@@ -91,8 +91,9 @@ const USER_PROMPTS = [
 ];
 
 let checkLatestVersion = (module) => {
+  let npmCommand = require('os').platform() === 'win32' ? 'npm.cmd' : 'npm';
   return new Promise((resolve, reject) => {
-    let npmShow = spawn('npm', ['show', module, 'version']);
+    let npmShow = spawn(npmCommand, ['show', module, 'version']);
     npmShow.on('error', (err) => {
       reject(err);
     });
