@@ -15,70 +15,80 @@ const HYDRA_NPM_MODULES = [
   'fwsp-config'
 ];
 const SCAFFOLD_FOLDERS = ['config', 'specs', 'specs/helpers', 'scripts'];
-const COPY_FILES = ['specs/test.js', 'specs/helpers/chai.js', 'scripts/docker.js'];
+const COPY_FILES = ['specs/test.js', 'specs/helpers/chai.js'];
 const DOT_FILES = ['.editorconfig', '.eslintrc', '.gitattributes', '.nvmrc'];
 const USER_PROMPTS = [
-        {
-          type    : 'input',
-          name    : 'name',
-          message : 'Name of the service (`-service` will be appended automatically)'
-        },
-        {
-          type    : 'input',
-          name    : 'ip',
-          message : 'Host the service runs on?',
-          default : ''
-        },
-        {
-          type    : 'input',
-          name    : 'port',
-          message : 'Port the service runs on?',
-          default : 0
-        },
-        {
-          type    : 'input',
-          name    : 'purpose',
-          message : 'What does this service do?'
-        },
-        {
-          type    : 'confirm',
-          name    : 'auth',
-          message : 'Does this service need auth?',
-          default : false
-        },
-        {
-          type    : 'confirm',
-          name    : 'express',
-          message : 'Is this a hydra-express service?',
-          default : true
-        },
-        {
-          when    : response => response.express,
-          type    : 'confirm',
-          name    : 'views',
-          message : 'Set up a view engine?',
-          default : false
-        },
-        {
-          type    : 'confirm',
-          name    : 'logging',
-          message : 'Set up logging?',
-          default : false
-        },
-        {
-          when    : response => response.express,
-          type    : 'confirm',
-          name    : 'cors',
-          message : 'Enable CORS on serverResponses?',
-          default : false
-        },
-        {
-          type    : 'confirm',
-          name    : 'npm',
-          message : 'Run npm install?',
-          default : false
-        },
-      ];
+  {
+    type: 'input',
+    name: 'name',
+    message: 'Name of the service (`-service` will be appended automatically)'
+  },
+  {
+    type: 'input',
+    name: 'author',
+    message: 'Your full name?'
+  },
+  {
+    type: 'input',
+    name: 'email',
+    message: 'Your email address?'
+  },
+  {
+    type: 'input',
+    name: 'ip',
+    message: 'Host the service runs on?',
+    default: ''
+  },
+  {
+    type: 'input',
+    name: 'port',
+    message: 'Port the service runs on?',
+    default: 0
+  },
+  {
+    type: 'input',
+    name: 'purpose',
+    message: 'What does this service do?'
+  },
+  {
+    type: 'confirm',
+    name: 'auth',
+    message: 'Does this service need auth?',
+    default: false
+  },
+  {
+    type: 'confirm',
+    name: 'express',
+    message: 'Is this a hydra-express service?',
+    default: true
+  },
+  {
+    when: response => response.express,
+    type: 'confirm',
+    name: 'views',
+    message: 'Set up a view engine?',
+    default: false
+  },
+  {
+    type: 'confirm',
+    name: 'logging',
+    message: 'Set up logging?',
+    default: false
+  },
+  {
+    when: response => response.express,
+    type: 'confirm',
+    name: 'cors',
+    message: 'Enable CORS on serverResponses?',
+    default: false
+  },
+  {
+    type: 'confirm',
+    name: 'npm',
+    message: 'Run npm install?',
+    default: false
+  },
+];
 
 let checkLatestVersion = (module) => {
   return new Promise((resolve, reject) => {
@@ -98,7 +108,7 @@ let checkLatestVersion = (module) => {
 module.exports = generators.Base.extend({
 
   initializing: {
-    displayVersion: function() {
+    displayVersion: function () {
       return Promise.all(['yeoman-generator', 'yo'].map(module => checkLatestVersion(module)))
         .then(versions => {
           console.log(
@@ -109,7 +119,7 @@ module.exports = generators.Base.extend({
         })
         .catch(err => console.log(err.toString()));
     },
-    latestModuleVersion: function() {
+    latestModuleVersion: function () {
       return Promise.all(HYDRA_NPM_MODULES.map(module => checkLatestVersion(module)))
         .then(results => {
           this.moduleVersions = {};
@@ -123,6 +133,8 @@ module.exports = generators.Base.extend({
   prompting: function () {
     return this.prompt(USER_PROMPTS).then(function (answers) {
       this.appname = answers.name;
+      this.author = answers.author;
+      this.email = answers.email;
       this.serviceFolder = answers.name + '-service';
       this.port = answers.port;
       this.purpose = answers.purpose;
@@ -132,10 +144,10 @@ module.exports = generators.Base.extend({
       this.logging = answers.logging;
       this.cors = this.express ? answers.cors : false;
       this.npm = answers.npm;
-     }.bind(this));
+    }.bind(this));
   },
 
-  scaffoldFolders: function(){
+  scaffoldFolders: function () {
     if (this.express) {
       SCAFFOLD_FOLDERS.push('routes');
       if (this.views) {
@@ -147,15 +159,15 @@ module.exports = generators.Base.extend({
     });
   },
 
-  copyFiles: function() {
+  copyFiles: function () {
     if (this.auth) {
       COPY_FILES.push('config/service.pub');
     }
     COPY_FILES.forEach((file) => {
-        this.copy(file, this.serviceFolder + '/' + file);
+      this.copy(file, this.serviceFolder + '/' + file);
     });
     DOT_FILES.forEach((file) => {
-        this.copy(file.replace('.', 'dot_'), this.serviceFolder + '/' + file);
+      this.copy(file.replace('.', 'dot_'), this.serviceFolder + '/' + file);
     });
   },
 
@@ -173,13 +185,15 @@ module.exports = generators.Base.extend({
     if (this.logging) {
       deps.push('fwsp-logger');
       if (!this.express) {
-         deps.push('fwsp-jsutils');
+        deps.push('fwsp-jsutils');
       }
     }
 
     var params = {
       name: this.appname,
       Name: this.appname.charAt(0).toUpperCase() + this.appname.slice(1),
+      author: this.author,
+      email: this.email,
       ip: this.ip,
       port: this.port,
       purpose: this.purpose,
@@ -210,19 +224,20 @@ module.exports = generators.Base.extend({
     copy('package.json');
     copy('README.md');
     copy(this.express ? 'hydra-express-service.js' : 'hydra-service.js',
-         this.appname + '-service.js');
+      this.appname + '-service.js');
     copy('config/sample-config.json');
     copy('config/sample-config.json', 'config/config.json');
+    copy('scripts/docker.js');
     if (this.express) {
       copy('routes/v1-routes.js', 'routes/' + this.appname + '-v1-routes.js');
     }
   },
 
-  _done: function() {
+  _done: function () {
     console.log(`\nDone!\n'cd ${this.serviceFolder}' then ${this.npm ? '' : '\'npm install\' and '}'npm start'\n`)
   },
 
-  done: function() {
+  done: function () {
     if (this.npm) {
       process.chdir(process.cwd() + '/' + this.serviceFolder);
       this.installDependencies({

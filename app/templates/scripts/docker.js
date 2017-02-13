@@ -1,15 +1,15 @@
 const config = require('fwsp-config'),
-      fs = require('fs'),
-      spawn = require('child_process').spawn,
-      tag = `flywheelsports/${process.env.npm_package_name}:${process.env.npm_package_version}`;
-      modes = {
-        build: ['docker', ['build', '-t', tag, process.cwd()], {stdio: 'inherit'}],
-        run: ['docker', ['run', '-it', tag], {stdio: 'inherit'}],
-        up: ['docker', ['run', '-d', tag], {detached: true}]
-      },
-      getDockerfile = (exposePort, logger=false) => `
+  fs = require('fs'),
+  spawn = require('child_process').spawn,
+  tag = `flywheelsports/${process.env.npm_package_name}:${process.env.npm_package_version}`;
+modes = {
+  build: ['docker', ['build', '-t', tag, process.cwd()], { stdio: 'inherit' }],
+  run: ['docker', ['run', '-it', tag], { stdio: 'inherit' }],
+  up: ['docker', ['run', '-d', tag], { detached: true }]
+},
+  getDockerfile = (exposePort, logger = false) => `
       FROM node:6.3
-      MAINTAINER Eric Adum eric@flywheelsports.com
+      MAINTAINER <%= author %> <%= email %>
       EXPOSE ${exposePort}
       ARG NPM_TOKEN
       RUN mkdir -p /usr/src/app
@@ -17,15 +17,15 @@ const config = require('fwsp-config'),
       ADD . /usr/src/app
       RUN echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > .npmrc
       ${logger ? 'RUN npm install pino-elasticsearch -g' : ''}
-      RUN npm install
+      RUN npm install --production
       RUN rm -f .npmrc
       CMD ["npm", "start"]
       `,
-      run = (mode) => {
-        console.log(`Running '${[modes[mode][0], ...modes[mode][1]].join(' ')}'`);
-        let docker = spawn(...modes[mode]);
-        docker.on('close', code => console.log(`docker ${mode} exited with code ${code}`));
-      };
+  run = (mode) => {
+    console.log(`Running '${[modes[mode][0], ...modes[mode][1]].join(' ')}'`);
+    let docker = spawn(...modes[mode]);
+    docker.on('close', code => console.log(`docker ${mode} exited with code ${code}`));
+  };
 
 let mode = process.argv[2];
 if (!modes[mode]) {
