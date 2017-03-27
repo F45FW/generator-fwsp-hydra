@@ -6,13 +6,13 @@ const version = require('./../package.json').version;
 const chalk = require('chalk');
 
 const HYDRA_NPM_MODULES = [
-  'fwsp-hydra-express',
-  'fwsp-server-response',
-  'fwsp-hydra',
+  'hydra',
+  'hydra-express',
+  'fwsp-config',
   'fwsp-jwt-auth',
-  'fwsp-logger',
   'fwsp-jsutils',
-  'fwsp-config'
+  'fwsp-logger',
+  'fwsp-server-response'
 ];
 const SCAFFOLD_FOLDERS = ['config', 'specs', 'specs/helpers', 'scripts'];
 const COPY_FILES = ['specs/test.js', 'specs/helpers/chai.js'];
@@ -176,9 +176,9 @@ module.exports = generators.Base.extend({
 
     let deps = ['fwsp-config'];
     if (this.express) {
-      deps.push('fwsp-hydra-express', 'fwsp-server-response');
+      deps.push('hydra-express', 'fwsp-server-response');
     } else {
-      deps.push('fwsp-hydra');
+      deps.push('hydra');
     }
     if (this.auth) {
       deps.push('fwsp-jwt-auth');

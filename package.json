@@ -1,6 +1,6 @@
 {
   "name": "generator-fwsp-hydra",
-  "version": "0.2.10",
+  "version": "0.3.0",
   "description": "Yeoman generator for Hydra microservices",
   "preferGlobal": true,
   "files": [

@@ -6,7 +6,7 @@
 'use strict';
 
 const version = require('./package.json').version;
-const hydraExpress = require('fwsp-hydra-express');
+const hydraExpress = require('hydra-express');
 
 <%_ if (auth) { _%>const jwtAuth = require('fwsp-jwt-auth');<%_ } _%>
 

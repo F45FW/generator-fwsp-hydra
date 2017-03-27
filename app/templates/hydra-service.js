@@ -6,7 +6,7 @@
 'use strict';
 
 const version = require('./package.json').version;
-const hydra = require('fwsp-hydra');
+const hydra = require('hydra');
 <%_ if (auth) { _%>const jwtAuth = require('fwsp-jwt-auth');<%_ } _%>
 let config = require('fwsp-config');
 
@@ -30,7 +30,7 @@ config.init('./config/config.json')
     /**
     * Initialize hydra
     */
-    return hydra.init(config.hydra);
+    return hydra.init(config);
   })
   .then(() => hydra.registerService())
   .then(serviceInfo => {

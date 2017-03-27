@@ -1,7 +1,7 @@
 {
   "name": "<%= name %>-service",
   "version": "0.0.1",
-  "author": "<%= author %> <<%= email %>",
+  "author": "<%= author %> <<%= email %>>",
   "private": true,
   "scripts": {
     "start": "node <%= name %>-service.js",
@@ -23,9 +23,8 @@
   },
   "devDependencies": {
     "chai": "3.5.0",
-    "eslint": "3.15.0",
-    "eslint-plugin-jasmine": "2.2.0",
+    "eslint": "3.16.0",
     "mocha": "3.2.0",
-    "superagent": "3.4.1"
+    "superagent": "3.5.2"
   }
 }
