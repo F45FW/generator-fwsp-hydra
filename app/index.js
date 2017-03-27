@@ -35,6 +35,11 @@ const USER_PROMPTS = [
   },
   {
     type: 'input',
+    name: 'organization',
+    message: 'Your organization or username? (used to tag docker images)'
+  },
+  {
+    type: 'input',
     name: 'ip',
     message: 'Host the service runs on?',
     default: ''
@@ -136,6 +141,7 @@ module.exports = generators.Base.extend({
       this.appname = answers.name;
       this.author = answers.author;
       this.email = answers.email;
+      this.organization = answers.organization;
       this.serviceFolder = answers.name + '-service';
       this.port = answers.port;
       this.purpose = answers.purpose;
@@ -195,6 +201,7 @@ module.exports = generators.Base.extend({
       Name: this.appname.charAt(0).toUpperCase() + this.appname.slice(1),
       author: this.author,
       email: this.email,
+      organization: this.organization,
       ip: this.ip,
       port: this.port,
       purpose: this.purpose,

@@ -1,7 +1,7 @@
 const config = require('fwsp-config'),
   fs = require('fs'),
   spawn = require('child_process').spawn,
-  tag = `flywheelsports/${process.env.npm_package_name}:${process.env.npm_package_version}`;
+  tag = `<%= organization %>/${process.env.npm_package_name}:${process.env.npm_package_version}`;
 modes = {
   build: ['docker', ['build', '-t', tag, process.cwd()], { stdio: 'inherit' }],
   run: ['docker', ['run', '-it', tag], { stdio: 'inherit' }],
