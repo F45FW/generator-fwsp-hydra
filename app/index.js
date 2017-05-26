@@ -8,11 +8,9 @@ const chalk = require('chalk');
 const HYDRA_NPM_MODULES = [
   'hydra',
   'hydra-express',
+  'hydra-express-plugin-jwt-auth',
   'fwsp-config',
-  'fwsp-jwt-auth',
-  'fwsp-jsutils',
-  'fwsp-logger',
-  'fwsp-server-response'
+  'fwsp-logger'
 ];
 const SCAFFOLD_FOLDERS = ['config', 'specs', 'specs/helpers', 'scripts'];
 const COPY_FILES = ['specs/test.js', 'specs/helpers/chai.js'];
@@ -57,15 +55,16 @@ const USER_PROMPTS = [
   },
   {
     type: 'confirm',
-    name: 'auth',
-    message: 'Does this service need auth?',
-    default: false
-  },
-  {
-    type: 'confirm',
     name: 'express',
     message: 'Is this a hydra-express service?',
     default: true
+  },
+  {
+    type: 'confirm',
+    when: response => response.express,
+    name: 'auth',
+    message: 'Does this service need auth?',
+    default: false
   },
   {
     when: response => response.express,
@@ -182,18 +181,15 @@ module.exports = generators.Base.extend({
 
     let deps = ['fwsp-config'];
     if (this.express) {
-      deps.push('hydra-express', 'fwsp-server-response');
+      deps.push('hydra-express');
+      if (this.auth) {
+        deps.push('hydra-express-plugin-jwt-auth');
+      }
     } else {
       deps.push('hydra');
     }
-    if (this.auth) {
-      deps.push('fwsp-jwt-auth');
-    }
     if (this.logging) {
       deps.push('fwsp-logger');
-      if (!this.express) {
-        deps.push('fwsp-jsutils');
-      }
     }
 
     var params = {
@@ -235,7 +231,7 @@ module.exports = generators.Base.extend({
       this.appname + '-service.js');
     copy('config/sample-config.json');
     copy('config/sample-config.json', 'config/config.json');
-    copy('scripts/docker.js');
+    //copy('scripts/docker.js');
     if (this.express) {
       copy('routes/v1-routes.js', 'routes/' + this.appname + '-v1-routes.js');
     }

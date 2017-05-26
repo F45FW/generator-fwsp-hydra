@@ -7,7 +7,7 @@
     "start": "node <%= name %>-service.js",
     "debug": "node-debug <%= name %>-service.js --debug-brk",
     "test": "mocha specs --reporter spec",
-    "docker": "node scripts/docker.js"
+    "docker": "fwsp-docker-scripts"
   },
   "engines": {
     "node": ">=6.2.1"
@@ -24,6 +24,7 @@
   "devDependencies": {
     "chai": "3.5.0",
     "eslint": "3.16.0",
+    "fwsp-docker-scripts": "0.0.2",
     "mocha": "3.2.0",
     "superagent": "3.5.2"
   }

@@ -7,11 +7,11 @@
 const hydraExpress = require('hydra-express');
 const hydra = hydraExpress.getHydra();
 const express = hydraExpress.getExpress();
-<%_ if (auth) { _%>const jwtAuth = require('fwsp-jwt-auth');<%_ } _%>
-const ServerResponse = require('fwsp-server-response');
 
+const ServerResponse = hydra.getServerResponseHelper();
 let serverResponse = new ServerResponse();
 <%_ if (cors) { _%>serverResponse.enableCORS(true);<%_ } _%>
+
 express.response.sendError = function(err) {
   serverResponse.sendServerError(this, {result: {error: err}});
 };
