@@ -2,9 +2,11 @@
 
 Yeoman generator for Hydra services
 
+Requires yeoman 1.x
+
 ## Synopsis
 ```
-$ npm install -g yo generator-fwsp-hydra
+$ npm install -g yo@^1 generator-fwsp-hydra
 $ yo fwsp-hydra
 ? Name of the service (`-service` will be appended automatically) example
 ? Your full name? Eric Adum
